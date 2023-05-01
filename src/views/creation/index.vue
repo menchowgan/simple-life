@@ -102,7 +102,7 @@ user.value.id = (userStore.userInfo as UserModel)?.id;
 
 watch(
   () => route.params.type,
-  async (newVal, oldVal, onCleanup) => {
+  async (newVal, _, onCleanup) => {
     let expired = false;
 
     onCleanup(() => {
@@ -138,9 +138,9 @@ const getData = async () => {
   }
 };
 
-const onRefresh = () => {
-  getData();
-};
+// const onRefresh = () => {
+//   getData();
+// };
 
 onMounted(() => {
   init();

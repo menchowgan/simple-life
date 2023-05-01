@@ -23,6 +23,9 @@ interface UserModel {
   audios?: Array<MusicModel>
   videos?: Array<VideoModel>
   articleSimpleInfos?: Array<ArticleSimpleInfoModel>
+  musics?: MusicModel[]
+  article?: ArticleSimpleInfoModel
+  video?: VideoModel
 }
 
 interface PhotoModel {
@@ -52,10 +55,13 @@ interface VideoModel {
   paused?: boolean
 }
 
+type InfoModel = ArticleSimpleInfoModel | MusicModel | PhotoModel
+
 export type {
   ArticleSimpleInfoModel,
   UserModel,
   PhotoModel,
   MusicModel,
-  VideoModel
+  VideoModel,
+  InfoModel
 }

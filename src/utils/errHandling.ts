@@ -1,6 +1,6 @@
 import { GMessage } from "@/plugins"
 
-const isFunction = (args: unknown): boolean => {
+const isFunction = (args: unknown): args is Function => {
   return args instanceof Function
 }
 

@@ -1,45 +1,7 @@
-<template>
-  <div class="music-view flex column">
-    <NoData v-if="length === 0" />
-    <el-card
-      shadow="hover"
-      class="card flex row"
-      :body-style="{ height: '96%', width: '100%' }"
-      v-for="(item, index) in musicInfos"
-      :key="item.id"
-    >
-      <div class="content flex row">
-        <el-avatar
-          :size="250"
-          :src="item.avatar"
-          :class="{ image: true, rotatingImg: !item.paused }"
-        />
-        <div class="section flex column">
-          <span class="title"
-            >{{ item.title }} <span class="artist"> - {{ item.artist }} </span>
-          </span>
-          <div class="body flex column">
-            <MusicPlayer
-              :music="item.audioUrl"
-              :music-idx="index"
-              :shouldPaused="item.paused"
-              @shouldRotate="setRotate"
-              @curMusicStateChanged="curMusicStateChanged"
-            />
-          </div>
-          <div class="evaluation">
-            <span>评价：</span> {{ item.evalution }}
-          </div>
-        </div>
-      </div>
-    </el-card>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, watchEffect } from "vue";
 import MusicPlayer from "@/components/MusicPlayer.vue";
-import type {MusicModel} from "../utils/interfaces/index"
+import type { MusicModel } from "../utils/interfaces/index"
 import NoData from "./common/NoData.vue";
 
 const props = defineProps({
@@ -71,79 +33,131 @@ const curMusicStateChanged = (cur: { idx: number; paused: boolean }) => {
   });
 };
 
-const setRotate = (state: {idx: number, pause: boolean}) => {
+const setRotate = (state: { idx: number, pause: boolean }) => {
   musicInfos.value[state.idx].paused = state.pause
 }
 
 </script>
+
+<template>
+  <div class="music-view flex column">
+    <NoData v-if="length === 0" />
+    <el-card 
+      shadow="hover" 
+      class="card flex row" 
+      :body-style="{ height: '96%', width: '100%' }"
+      v-for="(item, index) in musicInfos" :key="item.id"
+    >
+      <div class="content flex column">
+        <div class="header flex row">
+          <el-avatar 
+            shape="square"
+            :size="340" 
+            :src="item.avatar" 
+            class="image" 
+          />
+          <div class="section flex column">
+            <span class="title">
+              {{ item.title }} 
+              <span class="artist"> - {{ item.artist }} </span>
+            </span>
+            <div class="evaluation">
+              <span>评价：</span> {{ item.evalution }}
+            </div>
+          </div>
+        </div>
+        <div class="body flex column">
+          <MusicPlayer 
+            :music="item.audioUrl" 
+            :music-idx="index" 
+            :shouldPaused="item.paused" 
+            @shouldRotate="setRotate"
+            @curMusicStateChanged="curMusicStateChanged" />
+        </div>
+      </div>
+    </el-card>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "../style/flex-style.scss";
 @import "../style/theme.scss";
 
 .music-view {
-  width: 99%;
-  margin-top: 5px;
+  width: 100%;
+  margin-top: 20px;
   justify-content: flex-start;
   align-items: center;
   border-radius: 10px;
   box-shadow: var(--el-box-shadow);
   .card {
-    width: 98%;
-    height: 360px;
+    width: 100%;
+    height: 720px;
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 20px;
     justify-content: center;
     align-items: center;
+
     .content {
       width: 100%;
-      height: 96%;
+      height: 90%;
+      margin-top: 2%;
       justify-content: flex-start;
       align-items: center;
-      .section {
-        width: 74%;
-        height: 100%;
-        padding: 14px;
+
+      .header {
+        width: 78%;
         justify-content: center;
         align-items: flex-start;
+      }
+
+      .section {
+        width: 64%;
+        height: 100%;
+        padding: 14px;
+        margin-left: 16px;
+        justify-content: center;
+        align-items: flex-start;
+
         .title {
           flex: 1;
-          font-size: 36px;
-          margin-top: 28px;
+          font-size: 50px;
+
           &:hover {
             @include hover-style;
+            color: #3fc7f5;
           }
+
           .artist {
             font-size: 34px;
             color: $theme-color;
           }
-        }
-        .body {
-          flex: 5;
-          padding-left: 20px;
-          justify-content: center;
+
         }
         .evaluation {
           flex: 6;
-          margin-left: 30px;
-          color: #aaa;
-          font-size: 24px;
+          font-size: 32px;
+
           span {
             font-size: 32px;
-            color: $theme-color;
+            color: #3fc7f5;
           }
         }
       }
+
+      .body {
+        flex: 6;
+        padding-left: 20px;
+        justify-content: center;
+      }
+
       .image {
         margin-left: 20px;
         border: 5px solid $theme-color;
         box-shadow: var(--el-box-shadow);
       }
 
-      .rotatingImg {
-        animation: rotating-img 15s linear infinite;
-      }
     }
   }
 }
@@ -152,6 +166,7 @@ const setRotate = (state: {idx: number, pause: boolean}) => {
   0% {
     transform: rotate(0);
   }
+
   100% {
     transform: rotate(360deg);
   }

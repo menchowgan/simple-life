@@ -1,5 +1,5 @@
 import { instance, Axios } from './utils/instance'
-import CONFIG_METHODS from "./utils/Config"
+import CONFIG_METHODS, { ConfigModel } from "./utils/Config"
 
 interface ConfigOptsModel {
   url?: string
@@ -31,42 +31,39 @@ interface ConfigOptsModel {
   cancelToken?: object
 }
 
+function urlReplace(url: string, params: any) {
+  return url.replace(/\{(\w+)\}/g, (_, $2) => {
+    return params?.[$2]
+  })
+}
+
 function request(requestName: string, configOpts?: ConfigOptsModel): any
 function request(requestName: string, params?: any, configOpts?: ConfigOptsModel): any
 function request(requestName: string, params?: any, conf?: any): any{
-  const config = CONFIG_METHODS[requestName]
-  let request
-  if (config) {
-    let parameter = params
-    switch (config.method) {
+  const config = CONFIG_METHODS[requestName] as ConfigModel
+  let parameter: any = params
+  const method = config!.method || 'post'
+  switch (method) {
       case "get":
-        if (typeof params === 'string' || typeof params === 'number') {
-          request = instance.get(`${config.url}/${params}`)
-        } else {
-          if (conf && conf.params) {
-            parameter = conf.params
-          }
-          request = instance.get(config.url, { params: parameter })
+        if (params) {
+          parameter = params
+          config.url = urlReplace(config.url, parameter)
         }
-        break;
+        return instance.get(config.url, conf)
       case "post":
-        if (params && params.params) {
-          parameter = params.params
+        if (params) {
+          parameter = params
+          config.url = urlReplace(config.url, parameter)
         }
-        request = instance.post(config.url, parameter)
-        break;
+        return instance.post(config.url, parameter, conf)
+      case "put":
+        if (params) {
+          parameter = params
+          config.url = urlReplace(config.url, parameter)
+        }
+        return instance.put(config.url, parameter, conf)
       case "delete":
-        let data = {}
-        console.log(" params is ConfigOptsModel", params as ConfigOptsModel);
-        
-        if (params && params.data) {
-          parameter = params.data
-        }
-        data = parameter
-        request = instance.delete(config.url, {data})
-        break;
-    }
-    return request
+        return instance.delete(config.url, conf)
   }
 }
 

@@ -3,10 +3,28 @@ import { callAsyncWithErrHandler, showError } from '../errHandling';
 import { UserModel } from "../interfaces"
 
 export default class UserManager {
-  public static USER_ID = 12
+  public static USER_ID = 2
 
   constructor() {
     
+  }
+
+  public async searchSimpleLifeInfo(): Promise<UserModel | null> {
+    try {
+      const res = await request('SIMPLE_LIFE', {id: UserManager.USER_ID})
+      if (res?.code === 200) {
+        if (!res.data?.article?.id) {
+          res.data.article = null
+        }
+        if (!res.data?.video?.id) {
+          res.data.video = null
+        }
+        return res.data
+      }
+      return null
+    } catch (e) {
+      return null
+    }
   }
 
   public async searchById(id: number): Promise<UserModel | null> {

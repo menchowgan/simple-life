@@ -1,10 +1,3 @@
-<template>
-  <p class="art-title" :style="styleList">
-    <span :style="artStyle">{{ content.h }}</span>
-    <span :style="deputyTStyle">{{ content.t }}</span>
-  </p>
-</template>
-
 <script setup lang="ts">
 import { computed } from "@vue/runtime-core";
 
@@ -41,7 +34,8 @@ const props = defineProps({
   },
   artColor: {
     type: String,
-    default: "#3fc7f5",
+    // default: "#8B00FF",
+    default: "#fff",
   },
   artFamily: String,
   deputyFontStyle: Object,
@@ -86,6 +80,13 @@ const content = computed(() => {
 });
 </script>
 
+<template>
+  <p class="art-title" :style="styleList">
+    <span :style="artStyle">{{ content.h }}</span>
+    <span :style="deputyTStyle">{{ content.t }}</span>
+  </p>
+</template>
+
 <style lang="scss" scoped>
 @import "../style/animation.scss";
 .art-title {
@@ -103,5 +104,8 @@ const content = computed(() => {
   100% {
     transform: scale(1);
   }
+}
+.a {
+  color: #8a2be2;
 }
 </style>

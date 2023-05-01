@@ -1,3 +1,60 @@
+<script lang="ts" setup>
+import { ref } from 'vue';
+import HeaderNav from '@/components/HeaderNav.vue';
+import ArtText from '@/components/ArtText.vue';
+import Carousel from '@/components/Carousel.vue';
+import ArticleCard from '@/components/ArticleCard.vue'
+import MusicView from '@/components/MusicView.vue'
+import Video from '@/components/Video.vue'
+import { UserManager } from '@/utils/managers';
+import { useUserInfoStore } from '@/store'
+import type {
+  UserModel,
+  MusicModel, 
+  ArticleSimpleInfoModel,
+  PhotoModel,
+  VideoModel
+} from '@/utils/interfaces'
+const userStore = useUserInfoStore()
+
+const title = ref("Simple Life")
+
+const onNavTypeSelected = (type: string) => {
+  console.log(type);
+};
+
+const userManager = new UserManager()
+
+const video = ref<VideoModel | null>()
+const articleSimpleInfos = ref<Array<ArticleSimpleInfoModel>>([])
+const musicInfos = ref<Array<MusicModel>>([])
+const photos = ref<Array<PhotoModel>>([])
+
+const init = async () => {
+  const data: UserModel | null = await userManager.searchSimpleLifeInfo()
+  const music = data?.musics
+  const article = data?.article
+  const photosList = data?.photos
+  const videoM = data?.video
+  if (music?.length) {
+    musicInfos.value = music
+  }
+  if (article) {
+    articleSimpleInfos.value = [article]
+  }
+  if (photosList?.length) {
+    photos.value = photosList
+  }
+  if (videoM) {
+    video.value = videoM
+  }
+  userStore.userInfo = data as UserModel
+}
+
+init()
+
+</script>
+
 <template>
   <div class="Home flex column">
     <div class="header">
@@ -14,18 +71,31 @@
         </div>
       </div>
     </div>
+    <div class="body">
+      <div class="articles flex column">
+        <ArticleCard v-if="articleSimpleInfos.length"       :articleSimpleInfos="articleSimpleInfos" />
+        <MusicView v-if="musicInfos.length" :audios="musicInfos" />
+        <Video v-if="video" :video="video" />
+      </div>
+      <div class="sider">
+        <nav class="personal-content" style="flex: 1">
+          <ArtText
+            :width="80"
+            :height="100"
+            :fontSize="50"
+            fontFamily="'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
+            :artFontSize="55"
+            :deputyFontStyle="{ color: 'white' }"
+            artColor="#fff"
+            color="#ccc"
+            text="MY -Photos"
+          />
+          <Carousel :photos="photos" style="width: 100%; margin-top: 50px" />
+        </nav>
+      </div>
+    </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { ref, computed, onActivated, h, reactive, readonly } from "vue";
-import HeaderNav from "@/components/HeaderNav.vue";
-import ArtText from "@/components/ArtText.vue";
-const title = ref("simple life")
-
-const onNavTypeSelected = (type: string) => {
-};
-</script>
 
 <style scoped lang="scss">
 @import "../style/flex-style.scss";
@@ -35,15 +105,27 @@ const onNavTypeSelected = (type: string) => {
   width: 100%;
   align-items: center;
   .body {
-    width: 80%;
+    width: 88%;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     opacity: 0.8;
+    margin-top: 24px;
     margin-bottom: 200px;
+    .articles {
+      width: 70%;
+      // max-height: 2000px;
+      opacity: 0.9;
+      min-width: 500px;
+      flex: 4;
+      justify-content: flex-start;
+      align-items: flex-start;
+      overflow: auto;
+    }
     .sider {
-      min-width: 350px;
-      flex: 2;
+      width: 20%;
+      min-width: 150px;
+      margin-left: 5%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -59,20 +141,20 @@ const onNavTypeSelected = (type: string) => {
     }
   }
   .header {
-    width: 80%;
+    width: 88%;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     opacity: 0.8;
     .nav {
-      width: 60%;
+      width: 80%;
       height: 660px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-start;
       .art-text {
-        margin-bottom: 80px;
+        margin-bottom: 100px;
       }
     }
     .avator {
@@ -115,7 +197,7 @@ const onNavTypeSelected = (type: string) => {
     }
   }
   .personal-content {
-    width: 380px;
+    width: 280px;
     height: 500px;
     margin-left: 32px;
     display: flex;
@@ -134,15 +216,6 @@ const onNavTypeSelected = (type: string) => {
     }
   }
 
-  .articles {
-    max-height: 2000px;
-    opacity: 0.9;
-    min-width: 500px;
-    flex: 3;
-    justify-content: flex-start;
-    align-items: flex-start;
-    overflow: auto;
-  }
 }
 
 @keyframes text-scale {

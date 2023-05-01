@@ -1,145 +1,92 @@
-interface UserModel {
-  id?: number
-  nickname?: string
-  gender?: string
-  hobbies?: Array<string>
-  fans?: number
-  evaluate?: number
-  brief?: string
-  avatar?: string
-  photos?: Array<PhotoModel>,
-  articleSimplaeInfos?: Array<ArticleSimpleInfoModel>
+import type {
+  ArticleSimpleInfoModel,
+  PhotoModel,
+  MusicModel,
+  VideoModel
+} from '@/utils/interfaces'
+
+const vidoe: VideoModel =  {
+  title: '我们的爱情',
+  evalution: '记录下我们的爱情！',
+  artist: '甘梦超 & 徐婷婷'
 }
 
-interface PhotoModel {
-  id: number
-  url: string
+const article: ArticleSimpleInfoModel = {
+  brief: 
+"页面由本人进行个性化设计符合自己的风格，旨在分享日常工作和学习之用、以及自己的兴趣爱好，音乐游戏旅游发表相应的文章进行分享;\n在本人个人网页搭建中使用Vue3作为框架，实践自己封装axios http请求库，实现拦截器对请求钱和请求后的config和response进行进一步处理；后端使用go结合Gin后端框架进行开发，对前端上传的图片音频文件进行存取，访问者在房页面时请求后台获取展示数据。。。",
+  date: "2022-06-12T13:06:32.027+08:00",
+  id: 1,
+  imgUrl: "http://8.136.84.136:81/1/article/vue&gin.jpg",
+  title: "Vue3 + Gin(Go)搭建个人主页",
+  userId: 1
 }
 
-interface ArticleSimpleInfoModel {
-  id?: number
-  imgUrl?: string
-  title?: string
-  content?: Date | string
-  date?: Date
-}
+const musics: MusicModel[] = [{
+  id: 1,
+  audioUrl: 'http://dl.stream.qqmusic.qq.com/C4000004d30U0tsdrH.m4a?guid=4878077028&vkey=0469B8D9B4072A2D4FA2F8AE9288290A34964110FAD88CF6EEC023A6D88410FBEEEF355CCE4AC56F4C9120CE801E97BB01AE067A8173CF32&uin=&fromtag=120032',
+  title: '乌梅子酱',
+  paused: false,
+  evalution: '太经典了'
+}]
 
-const user: UserModel = {
-  id: 0,
-  nickname: "Menchow GAN",
-  avatar: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-  fans: 20,
-  gender: "男",
-  photos: [
-    {
-      id: 0,
-      url: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.momi8.com%2Fimages%2Fblog_images%2F201207%2Fwww.momi8.com_201207141731411081004.jpg&refer=http%3A%2F%2Fwww.momi8.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653923499&t=c6dba16b27ed994fc5250cbf62ec6417"
-    },
-    {
-      id: 1,
-      url: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimages.cnblogs.com%2Fcnblogs_com%2Fchenpi%2F809071%2Fo_bg.jpg&refer=http%3A%2F%2Fimages.cnblogs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653923499&t=7cec63749b30c1e95f355c1257d7551a",
-    },
-    {
-      id: 2,
-      url: "https://img2.baidu.com/it/u=70814297,2782616976&fm=253&fmt=auto&app=138&f=JPEG?w=490&h=513",
-    },
-    {
-      id: 3,
-      url: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimages2015.cnblogs.com%2Fblog%2F1118135%2F201707%2F1118135-20170719095351052-380810440.jpg&refer=http%3A%2F%2Fimages2015.cnblogs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653923499&t=27b05c424f2cad2a9adb6f99eb69e3bb"
-    },
-    {
-      id: 4,
-      url: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-    }
-  ],
-  articleSimplaeInfos: [
-    {
-      id: 2,
-      imgUrl:
-        "https://img0.baidu.com/it/u=403007778,499203326&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-      title: "最唯美的散文精选篇一：人生路上，蝶梦飞飞",
-      content:
-        "人生如一路风景线，风景有你的看，也有风景在对你看。一晃几十年，常常叹!岁月的车厢，装的全是别人的颜。烟雨云散，只有自己的遗憾在叹。当我们在感叹时，抱怨、抱怨。抱怨，机遇全是别人的缘;人生如一路风景线，风景有你的看，也有风景在对你看。一晃几十年，常常叹!岁月的车厢，装的全是别人的颜。烟雨云散，只有自己的遗憾在叹。",
-    },
-    {
-      id: 3,
-      imgUrl:
-        "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fnote%2Fl%2Fpublic%2Fp55297062.jpg&refer=http%3A%2F%2Fimg3.doubanio.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653965733&t=1292d860c795eaa03b05c8ceafbd1c36",
-      title: "人生如蝶。花盛开，便认真去爱惜",
-      content:
-        "千万不要否认大家曾经拥有的情感，只需记牢难忘的回忆就行，那样才不容易感觉自身以前投入的情感不值。浮沉流年，空落了是多少幽怨爱恨。循环变化，寻看不到曾有的沧海桑田，沐人间烟火，又怎么会不染岁月风尘，虽然踏过的仅仅半生烟火。",
-    },
-    {
-      id: 1,
-      imgUrl:
-        "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-      title: "Yummy hamburger1",
-      content: new Date(),
-    },
-    {
-      id: 2,
-      imgUrl:
-        "https://img0.baidu.com/it/u=403007778,499203326&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-      title: "最唯美的散文精选篇一：人生路上，蝶梦飞飞",
-      content:
-        "人生如一路风景线，风景有你的看，也有风景在对你看。一晃几十年，常常叹!岁月的车厢，装的全是别人的颜。烟雨云散，只有自己的遗憾在叹。当我们在感叹时，抱怨、抱怨。抱怨，机遇全是别人的缘;人生如一路风景线，风景有你的看，也有风景在对你看。一晃几十年，常常叹!岁月的车厢，装的全是别人的颜。烟雨云散，只有自己的遗憾在叹。",
-    },
-    {
-      id: 3,
-      imgUrl:
-        "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fnote%2Fl%2Fpublic%2Fp55297062.jpg&refer=http%3A%2F%2Fimg3.doubanio.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653965733&t=1292d860c795eaa03b05c8ceafbd1c36",
-      title: "人生如蝶。花盛开，便认真去爱惜",
-      content:
-        "千万不要否认大家曾经拥有的情感，只需记牢难忘的回忆就行，那样才不容易感觉自身以前投入的情感不值。浮沉流年，空落了是多少幽怨爱恨。循环变化，寻看不到曾有的沧海桑田，沐人间烟火，又怎么会不染岁月风尘，虽然踏过的仅仅半生烟火。",
-    },
-    {
-      id: 1,
-      imgUrl:
-        "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-      title: "Yummy hamburger1",
-      content: new Date(),
-    },
-    {
-      id: 2,
-      imgUrl:
-        "https://img0.baidu.com/it/u=403007778,499203326&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-      title: "最唯美的散文精选篇一：人生路上，蝶梦飞飞",
-      content:
-        "人生如一路风景线，风景有你的看，也有风景在对你看。一晃几十年，常常叹!岁月的车厢，装的全是别人的颜。烟雨云散，只有自己的遗憾在叹。当我们在感叹时，抱怨、抱怨。抱怨，机遇全是别人的缘;人生如一路风景线，风景有你的看，也有风景在对你看。一晃几十年，常常叹!岁月的车厢，装的全是别人的颜。烟雨云散，只有自己的遗憾在叹。",
-    },
-    {
-      id: 3,
-      imgUrl:
-        "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fnote%2Fl%2Fpublic%2Fp55297062.jpg&refer=http%3A%2F%2Fimg3.doubanio.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653965733&t=1292d860c795eaa03b05c8ceafbd1c36",
-      title: "人生如蝶。花盛开，便认真去爱惜",
-      content:
-        "千万不要否认大家曾经拥有的情感，只需记牢难忘的回忆就行，那样才不容易感觉自身以前投入的情感不值。浮沉流年，空落了是多少幽怨爱恨。循环变化，寻看不到曾有的沧海桑田，沐人间烟火，又怎么会不染岁月风尘，虽然踏过的仅仅半生烟火。",
-    },
-    {
-      id: 2,
-      imgUrl:
-        "https://img0.baidu.com/it/u=403007778,499203326&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-      title: "最唯美的散文精选篇一：人生路上，蝶梦飞飞",
-      content:
-        "人生如一路风景线，风景有你的看，也有风景在对你看。一晃几十年，常常叹!岁月的车厢，装的全是别人的颜。烟雨云散，只有自己的遗憾在叹。当我们在感叹时，抱怨、抱怨。抱怨，机遇全是别人的缘;人生如一路风景线，风景有你的看，也有风景在对你看。一晃几十年，常常叹!岁月的车厢，装的全是别人的颜。烟雨云散，只有自己的遗憾在叹。",
-    },
-  ]
-}
+const photos: PhotoModel[] = [
+  {
+    id: 0,
+    url: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimages.cnblogs.com%2Fcnblogs_com%2Fchenpi%2F809071%2Fo_bg.jpg&refer=http%3A%2F%2Fimages.cnblogs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653923499&t=7cec63749b30c1e95f355c1257d7551a"
+  },
+  {
+    id: 1,
+    url: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimages.cnblogs.com%2Fcnblogs_com%2Fchenpi%2F809071%2Fo_bg.jpg&refer=http%3A%2F%2Fimages.cnblogs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653923499&t=7cec63749b30c1e95f355c1257d7551a",
+  },
+  {
+    id: 2,
+    url: "https://img2.baidu.com/it/u=70814297,2782616976&fm=253&fmt=auto&app=138&f=JPEG?w=490&h=513",
+  },
+  {
+    id: 3,
+    url: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimages2015.cnblogs.com%2Fblog%2F1118135%2F201707%2F1118135-20170719095351052-380810440.jpg&refer=http%3A%2F%2Fimages2015.cnblogs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653923499&t=27b05c424f2cad2a9adb6f99eb69e3bb"
+  }
+]
 
+const articleSimpleInfos: ArticleSimpleInfoModel[] = [{
+  title: 'Vue3 + Gin',
+  brief: '本人目前前端从业一年，前端学习时长三年，从基础的HTML+CSS+JavaScript，到jQuery，再到Vue全家桶，系统学习过三件套和两个框架，实践经验两到三个，做此个人主页一是以提高技术为目标，二是分享个人学习经验和日常兴趣爱好，为自己创造个自己的创作空间。',
+  date: '2023-03-18'
+}, {
+  title: 'Vue3 + Gin',
+  brief: '本人目前前端从业一年，前端学习时长三年，从基础的HTML+CSS+JavaScript，到jQuery，再到Vue全家桶，系统学习过三件套和两个框架，实践经验两到三个，做此个人主页一是以提高技术为目标，二是分享个人学习经验和日常兴趣爱好，为自己创造个自己的创作空间。',
+  date: '2023-03-18'
+}, {
+  title: 'Vue3 + Gin',
+  brief: '本人目前前端从业一年，前端学习时长三年，从基础的HTML+CSS+JavaScript，到jQuery，再到Vue全家桶，系统学习过三件套和两个框架，实践经验两到三个，做此个人主页一是以提高技术为目标，二是分享个人学习经验和日常兴趣爱好，为自己创造个自己的创作空间。',
+  date: '2023-03-18'
+}]
+ 
+const audios: MusicModel[] = [
+  {
+    id: 1,
+    audioUrl: 'http://dl.stream.qqmusic.qq.com/C4000004d30U0tsdrH.m4a?guid=4878077028&vkey=0469B8D9B4072A2D4FA2F8AE9288290A34964110FAD88CF6EEC023A6D88410FBEEEF355CCE4AC56F4C9120CE801E97BB01AE067A8173CF32&uin=&fromtag=120032',
+    title: '乌梅子酱',
+    artist: '李荣浩',
+    paused: false,
+    evalution: '太经典了'
+  },
+  {
+    id: 1,
+    audioUrl: 'http://dl.stream.qqmusic.qq.com/C4000004d30U0tsdrH.m4a?guid=4878077028&vkey=0469B8D9B4072A2D4FA2F8AE9288290A34964110FAD88CF6EEC023A6D88410FBEEEF355CCE4AC56F4C9120CE801E97BB01AE067A8173CF32&uin=&fromtag=120032',
+    title: '乌梅子酱',
+    artist: '李荣浩',
+    paused: false,
+    evalution: '太经典了'
+  },
+]
 
-// const user = reactive<UserModel>({
-//   id: 0,
-//   nickname: "Menchow Gan",
-//   gender: "男",
-//   hobbies: "音乐,旅行,侦探小说",
-//   fans: 5,
-//   evaluate: 5,
-//   brief:
-//     "呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分身乏术的卡夫卡呃我分",
-//   avatar:
-//     "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-// });
 
 export {
-  user,
+  vidoe,
+  article,
+  musics,
+  photos,
+  articleSimpleInfos,
+  audios
 }

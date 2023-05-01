@@ -21,4 +21,17 @@ export default class VideoManager {
       return false
     }
   }
+
+  /**
+   * queryBy user Id
+   */
+  public async query(userId: number): Promise<VideoModel[] | null> {
+    try {
+      const res = await request("VIDEO_QUERY_BY_USERID", {userId});
+      console.log("user video info post", res);
+      return res.code === 200 ? res?.data : null
+    } catch (e) {
+      return null
+    }
+  }
 }

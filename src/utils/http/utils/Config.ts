@@ -1,9 +1,9 @@
-interface ConfigModel {
+export interface ConfigModel {
   url: string,
   method: string
 }
 
-const CONFIG_METHODS: Record<string, ConfigModel> = {
+const userRequests = {
   "GET_USER_SIMPLE_INFO": {
     url: "/user/get-user-simple-info",
     method: "get"
@@ -16,14 +16,17 @@ const CONFIG_METHODS: Record<string, ConfigModel> = {
     url: "/user/get",
     method: "get"
   },
-  "HELLO": {
-    url: "/hello",
-    method: "post"
+  "SIMPLE_LIFE": {
+    url: "/user/simple-life/{id}",
+    method: 'post'
   },
   "POST_USER_INFO": {
     url: "/user/person-info-post",
     method: "post"
   },
+}
+
+const photoRequests = {
   "AVATAR_UPLOAD": {
     url: "/photo/avatar/upload",
     method: "post"
@@ -35,7 +38,10 @@ const CONFIG_METHODS: Record<string, ConfigModel> = {
   "DELETE_UPLOAD": {
     url: "/photo/user/photos/delete",
     method: "delete"
-  },
+  }
+}
+
+const musicRequests = {
   "MUSIC_UPLOAD": {
     url: "/music/upload",
     method: "post"
@@ -48,6 +54,13 @@ const CONFIG_METHODS: Record<string, ConfigModel> = {
     url: "/music/user/upload",
     method: "post"
   },
+  "MUSIC_QUERY_BY_USERID": {
+    url: "/music/query/{userId}",
+    method: "post"
+  },
+}
+
+const articleRequests = {
   "ARTICLE_PHOTO_UPLOAD": {
     url: "/article/photo/upload",
     method: "post"
@@ -57,17 +70,36 @@ const CONFIG_METHODS: Record<string, ConfigModel> = {
     method: "post"
   },
   "ARTICLE_QUERY": {
-    url: "/article/query",
+    url: "/article/query/{articleId}",
     method: "get"
   },
   "ARTICLE_QUERY_BY_TYPE": {
-    url: "/article/query-by-type",
+    url: "/article/query-by-type/{userid}/{type}",
     method: "get"
   },
+  "ARTICLE_QUERY_BY_USERID": {
+    url: "/article/query-by-userid/{userId}",
+    method: "post"
+  },
+}
+
+const videoRequests = {
   "VIDEO_USER_UPLOAD": {
     url: "/video/user/upload",
     method: "post"
   },
+  "VIDEO_QUERY_BY_USERID": {
+    url: "/video/query/{userId}",
+    method: "post"
+  },
+}
+
+const CONFIG_METHODS: Record<string, ConfigModel> = {
+  ...userRequests,
+  ...photoRequests,
+  ...musicRequests,
+  ...articleRequests,
+  ...videoRequests
 }
 
 export default CONFIG_METHODS;

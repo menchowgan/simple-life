@@ -1,6 +1,6 @@
 import axios from "axios"
 import { App } from "vue";
-import { GMessage } from '@/plugins';
+import { GMessage, Loading } from '@/plugins';
 
 const instance = axios.create({
   timeout: 1500,
@@ -14,12 +14,13 @@ const Axios = {
     const appProps = app.config.globalProperties
     instance.interceptors.request.use(
       config => {
+        Loading(true)
         // Do something before request is sent
         console.log("request", config);
         return config;
       },
       error => {
-        console.log("请求错误");
+        Loading(false)
         // Do something with request error
         GMessage("请求错误", {
           type: "error"
@@ -29,6 +30,7 @@ const Axios = {
 
     instance.interceptors.response.use(
       response => {
+        Loading(false)
         // Do something with response data
         if (response.status === 200 && response.statusText === "OK") {
           return response.data
@@ -36,6 +38,7 @@ const Axios = {
         return null;
       },
       error => {
+        Loading(false)
         console.log("请求错误");
         console.log(error);
         GMessage(error.response.data.message || "请求错误", {

@@ -11,7 +11,7 @@ export default class PhotosManager {
   public async deleteUserPhoto(url: string): Promise<boolean> {
     try {
       const res = await request("DELETE_UPLOAD", {url});
-      if ((res as any).code === 200) {
+      if (res.code === 200) {
         return true
       }
       return false

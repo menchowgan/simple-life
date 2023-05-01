@@ -66,7 +66,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .g-message {
-  position: absolute;
+  position: fixed;
   z-index: 9999;
   left: 50%;
   top: 50vh;

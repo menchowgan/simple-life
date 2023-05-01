@@ -76,7 +76,7 @@ const handleCoverSuccess: UploadProps["onSuccess"] = (response, uploadFile) => {
   }
 };
 
-const handleVideoSuccess: UploadProps["onSuccess"] = (response, uploadFile) => {
+const handleVideoSuccess: UploadProps["onSuccess"] = (response, _) => {
   console.log("video url", response);
   if (response.code === 200) {
     videoForm.videoUrl = response.data;

@@ -1,15 +1,3 @@
-<template>
-  <div class="images">
-    <el-image
-      v-for="item in (photos as Array<PhotoModel>)"
-      :key="item.id"
-      :src="item.url"
-      fit="cover"
-      @click="() => toPhotos({url: item.url, id: item.id})"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import type { PhotoModel } from "../utils/interfaces/index"
 
@@ -27,6 +15,18 @@ const toPhotos = (photo: PhotoModel) => {
 }
 
 </script>
+
+<template>
+  <div class="images">
+    <el-image
+      v-for="item in (photos as Array<PhotoModel>)"
+      :key="item.id"
+      :src="item.url"
+      fit="cover"
+      @click="() => toPhotos({url: item.url, id: item.id})"
+    />
+  </div>
+</template>
 
 <style scoped lang="scss">
 .images {

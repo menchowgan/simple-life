@@ -1,3 +1,65 @@
+<script setup lang="ts">
+import "@wangeditor/editor/dist/css/style.css"; // 引入 css
+
+import { dateFormat } from "../../utils/dateFormat";
+import ArtText from "@/components/ArtText.vue";
+import { Editor } from "@wangeditor/editor-for-vue";
+import { IEditorConfig } from "@wangeditor/core";
+import { useUserInfoStore } from "@/store";
+import { UserModel } from "@/utils/interfaces";
+import { reactive, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { GMessage } from "@/plugins";
+import { ArticleManager } from "@/utils/managers";
+
+const router = useRouter();
+const route = useRoute();
+const userStore = useUserInfoStore();
+const valueHtml = ref("<p style='width: 100%'> 无内容 </p>");
+const date = ref<string>("");
+
+const nickname = ref<string>((userStore.userInfo as UserModel)?.nickname as string);
+const circleUrl = ref<string>((userStore.userInfo as UserModel)?.avatar as string);
+
+const articleManager = new ArticleManager()
+
+const editorConfig: Partial<IEditorConfig> = reactive({
+  readOnly: true,
+});
+
+watch(
+  () => route.params.articleId,
+  async (newVal, _, onCleanup) => {
+    let expired = false;
+    onCleanup(() => {
+      expired = true;
+    });
+
+    if (!expired) {
+      if (newVal) {
+        const data = await articleManager.queryById(newVal as string)
+        if (data) {
+          valueHtml.value = data?.content as string;
+          date.value = dateFormat("yyyy-MM-dd hh:mm:ss", new Date(data?.created_at as string));
+        } else {
+          GMessage("没有找到文章信息", {
+            type: "warn"
+          })
+        }
+      }
+    }
+  },
+  {
+    immediate: true,
+  }
+);
+
+
+const onBack = () => {
+  router.go(-1);
+};
+</script>
+
 <template>
   <div class="article-info-cmp flex column">
     <el-icon class="back-icon" @click="onBack"><arrow-left-bold /></el-icon>
@@ -28,87 +90,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import "@wangeditor/editor/dist/css/style.css"; // 引入 css
-
-import { dateFormat } from "../../utils/dateFormat";
-import ArtText from "@/components/ArtText.vue";
-import { Editor } from "@wangeditor/editor-for-vue";
-import { IEditorConfig } from "@wangeditor/core";
-import { useUserInfoStore } from "@/store";
-import { UserModel } from "@/utils/interfaces";
-import { reactive, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { GMessage, Loading } from "@/plugins";
-import { ArticleManager } from "@/utils/managers";
-
-const router = useRouter();
-const route = useRoute();
-const userStore = useUserInfoStore();
-const valueHtml = ref("<p style='width: 100%'> 无内容 </p>");
-const date = ref<string>("");
-
-const nickname = ref<string>((userStore.userInfo as UserModel)?.nickname as string);
-const circleUrl = ref<string>((userStore.userInfo as UserModel)?.avatar as string);
-const curId = ref<string>(route.params.articleId as string)
-
-const articleManager = new ArticleManager()
-
-const editorConfig: Partial<IEditorConfig> = reactive({
-  readOnly: true,
-});
-
-watch(
-  () => route.params.articleId,
-  async (newVal, oldVal, onCleanup) => {
-    let expired = false;
-    onCleanup(() => {
-      expired = true;
-    });
-
-    if (!expired) {
-      if (newVal) {
-        Loading(true);
-        const data = await articleManager.queryById(newVal as string)
-        if (data) {
-          valueHtml.value = data?.content as string;
-          date.value = dateFormat("yyyy-MM-dd hh:mm:ss", new Date(data?.created_at as string));
-        } else {
-          GMessage("没有找到文章信息", {
-            type: "warn"
-          })
-        }
-        Loading(false);
-      }
-    }
-  },
-  {
-    immediate: true,
-  }
-);
-
-const onEdit = (articleId: string) => {
-  if (!articleId || Number(articleId) === 0) {
-    GMessage("文章id必须大于零", {
-      type: "warn",
-    });
-    return;
-  }
-  console.log("article id: ", articleId);
-  router.push({
-    name: "Admin",
-    params: {
-      type: "ARTICLE_EDIT",
-      articleId,
-    },
-  });
-};
-
-const onBack = () => {
-  router.go(-1);
-};
-</script>
 
 <style lang="scss" scoped>
 @import "../../style/flex-style.scss";

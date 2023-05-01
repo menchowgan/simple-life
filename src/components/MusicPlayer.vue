@@ -1,12 +1,3 @@
-<template>
-  <div class="music-player flex column">
-    <div class="player flex row">
-      <el-icon v-if="paused" @click="() => onPlay()"><video-play /></el-icon>
-      <el-icon v-else @click="() => onPause()"><video-pause /></el-icon>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref } from "@vue/reactivity";
 import { watch, onMounted } from "@vue/runtime-core";
@@ -27,6 +18,10 @@ const props = defineProps({
   },
   shouldPaused: Boolean,
   musicIdx: Number,
+  showControl: {
+    type: Boolean,
+    default: true
+  }
 });
 
 if (audioStore.curidx === props.musicIdx) {
@@ -71,22 +66,34 @@ onMounted(() => {
 
 </script>
 
+<template>
+  <div class="music-player flex column">
+    <div class="player flex row">
+      <el-icon v-if="showControl"><CaretLeft /></el-icon>
+      <el-icon v-if="paused" @click="() => onPlay()"><video-play /></el-icon>
+      <el-icon v-else @click="() => onPause()"><video-pause /></el-icon>
+      <el-icon v-if="showControl"><CaretRight /></el-icon>
+    </div>
+  </div>
+</template>
+
 <style lang="scss" scoped>
 @import "../style/flex-style.scss";
 @import "../style/theme.scss";
 
 .music-player {
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   .player {
+    margin-top: 10px;
     justify-content: flex-start;
     align-items: center;
     .el-icon {
-      color: $theme-color;
+      color: #3fc7f5;
       margin-left: 10px;
       margin-right: 20px;
-      width: 56px;
-      height: 56px;
+      width: 80px;
+      height: 80px;
       &:hover {
         cursor: pointer;
       }
