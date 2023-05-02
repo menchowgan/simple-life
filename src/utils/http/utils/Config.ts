@@ -1,9 +1,11 @@
+type requestMethods = "post" | "get" | "put" | "delete"
+
 export interface ConfigModel {
   url: string,
-  method: string
+  method?: requestMethods
 }
 
-const userRequests = {
+const userRequests: Record<string, ConfigModel> = {
   "GET_USER_SIMPLE_INFO": {
     url: "/user/get-user-simple-info",
     method: "get"
@@ -26,7 +28,7 @@ const userRequests = {
   },
 }
 
-const photoRequests = {
+const photoRequests: Record<string, ConfigModel> = {
   "AVATAR_UPLOAD": {
     url: "/photo/avatar/upload",
     method: "post"
@@ -41,7 +43,7 @@ const photoRequests = {
   }
 }
 
-const musicRequests = {
+const musicRequests: Record<string, ConfigModel> = {
   "MUSIC_UPLOAD": {
     url: "/music/upload",
     method: "post"
@@ -60,7 +62,7 @@ const musicRequests = {
   },
 }
 
-const articleRequests = {
+const articleRequests: Record<string, ConfigModel> = {
   "ARTICLE_PHOTO_UPLOAD": {
     url: "/article/photo/upload",
     method: "post"
@@ -83,7 +85,7 @@ const articleRequests = {
   },
 }
 
-const videoRequests = {
+const videoRequests: Record<string, ConfigModel> = {
   "VIDEO_USER_UPLOAD": {
     url: "/video/user/upload",
     method: "post"

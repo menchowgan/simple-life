@@ -15,23 +15,20 @@ const Axios = {
     instance.interceptors.request.use(
       config => {
         Loading(true)
-        // Do something before request is sent
-        console.log("request", config);
         return config;
       },
       error => {
         Loading(false)
-        // Do something with request error
         GMessage("请求错误", {
           type: "error"
         })
         return Promise.reject(error);
-      });
+      }
+    );
 
     instance.interceptors.response.use(
       response => {
         Loading(false)
-        // Do something with response data
         if (response.status === 200 && response.statusText === "OK") {
           return response.data
         }
@@ -39,14 +36,12 @@ const Axios = {
       },
       error => {
         Loading(false)
-        console.log("请求错误");
-        console.log(error);
         GMessage(error.response.data.message || "请求错误", {
           type: "error"
         })
-        // Do something with response error
         return Promise.reject(error);
-      });
+      }
+    );
     appProps.axios = instance;
   }
 }
